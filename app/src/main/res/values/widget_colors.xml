@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="widget_background">#F8FAFC</color>
+    <color name="widget_surface">#FFFFFF</color>
+    <color name="widget_border">#E2E8F0</color>
+    <color name="widget_primary">#2563EB</color>
+    <color name="widget_primary_deep">#1D4ED8</color>
+    <color name="widget_on_primary">#FFFFFF</color>
+    <color name="widget_primary_container">#DBEAFE</color>
+    <color name="widget_on_primary_container">#1E3A8A</color>
+    <color name="widget_text_primary">#0F172A</color>
+    <color name="widget_text_secondary">#475569</color>
+    <color name="widget_progress_track">#E2E8F0</color>
+    <color name="widget_priority_high">#DC2626</color>
+    <color name="widget_priority_medium">#D97706</color>
+    <color name="widget_priority_low">#059669</color>
+    <color name="widget_overdue">#DC2626</color>
+
+    <!-- Multi-widget semantic accent tokens -->
+    <color name="widget_accent_blue">#2563EB</color>
+    <color name="widget_accent_blue_bg">#EFF6FF</color>
+    <color name="widget_accent_amber">#D97706</color>
+    <color name="widget_accent_amber_bg">#FFFBEB</color>
+    <color name="widget_accent_crimson">#DC2626</color>
+    <color name="widget_accent_crimson_bg">#FEF2F2</color>
+    <color name="widget_accent_emerald">#059669</color>
+    <color name="widget_accent_emerald_bg">#ECFDF5</color>
+    <color name="widget_accent_violet">#7C3AED</color>
+    <color name="widget_accent_violet_bg">#F5F3FF</color>
+    <color name="widget_fab_stroke">#60A5FA</color>
+</resources>

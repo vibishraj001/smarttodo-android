@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="22dp"
+    android:height="22dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <!-- Rounded midnight navy emblem badge -->
+    <path
+        android:fillColor="#0D182E"
+        android:pathData="M6,1 L18,1 C20.76,1 23,3.24 23,6 L23,18 C23,20.76 20.76,23 18,23 L6,23 C3.24,23 1,20.76 1,18 L1,6 C1,3.24 3.24,1 6,1 Z" />
+    <!-- Secondary cyan ribbon facet -->
+    <path
+        android:fillColor="#38BDF8"
+        android:pathData="M15.8,10.2 L18.2,12.1 L10.6,18.8 L10.2,17.2 Z" />
+    <!-- Primary cobalt geometric checkmark ribbon -->
+    <path
+        android:fillColor="#2563EB"
+        android:pathData="M5.4,12.2 L7.6,9.8 L10.6,14.0 L16.2,6.4 L19.2,6.4 L10.6,18.8 Z" />
+    <!-- Specular white inner ridge -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M7.6,9.8 L10.6,13.6 L16.2,6.4 L15.1,8.9 L10.6,15.0 L7.2,10.5 Z" />
+</vector>

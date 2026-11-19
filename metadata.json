@@ -1,0 +1,6 @@
+{
+  "name": "SmartTodo",
+  "description": "A native Android productivity and task management app with Google Sign-In, Cloud Firestore sync, filtering, sorting, and local task reminders.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

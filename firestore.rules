@@ -1,0 +1,253 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Global default-deny safety net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // --- GLOBAL SECURITY HELPERS ---
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() >= 1 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function isValidTimestamp(ts) {
+      return ts is timestamp && ts <= request.time;
+    }
+
+    function isValidOptionalTime(data, field) {
+      return !(field in data) || data[field] == null || (
+        data[field] is string &&
+        data[field].size() == 5 &&
+        data[field].matches('^([01]\\d|2[0-3]):[0-5]\\d$')
+      );
+    }
+
+    function isValidOptionalDate(data, field) {
+      return !(field in data) || data[field] == null || (
+        data[field] is int &&
+        data[field] >= 0
+      );
+    }
+
+    // --- ENTITY VALIDATION BLUEPRINTS ---
+    function isValidUserProfile(data, userId) {
+      return data.keys().hasAll(['userId', 'name', 'email', 'createdAt', 'updatedAt']) &&
+             data.keys().hasOnly(['userId', 'name', 'email', 'createdAt', 'updatedAt']) &&
+             data.userId is string &&
+             data.userId == userId &&
+             isValidId(data.userId) &&
+             data.name is string &&
+             data.name.size() >= 1 &&
+             data.name.size() <= 100 &&
+             data.email is string &&
+             data.email.size() <= 254 &&
+             isValidTimestamp(data.createdAt) &&
+             isValidTimestamp(data.updatedAt);
+    }
+
+    function isValidTaskList(data, userId) {
+      return data.keys().hasAll(['userId', 'name', 'colorHex', 'createdAt', 'updatedAt']) &&
+             data.keys().hasOnly(['userId', 'name', 'colorHex', 'createdAt', 'updatedAt']) &&
+             data.userId is string &&
+             data.userId == userId &&
+             isValidId(data.userId) &&
+             data.name is string &&
+             data.name.size() >= 1 &&
+             data.name.size() <= 60 &&
+             data.colorHex is string &&
+             data.colorHex.matches('^#[0-9A-Fa-f]{6}$') &&
+             isValidTimestamp(data.createdAt) &&
+             isValidTimestamp(data.updatedAt);
+    }
+
+    function isValidTask(data, userId) {
+      return data.keys().hasAll([
+               'userId', 'title', 'priority', 'category',
+               'isCompleted', 'createdAt', 'updatedAt'
+             ]) &&
+             data.keys().hasOnly([
+               'userId', 'title', 'description', 'dueDate', 'dueTime',
+               'startDate', 'startTime', 'deadline',
+               'priority', 'category', 'listId',
+               'isCompleted', 'isStarred',
+               'recurrenceType', 'recurrenceInterval', 'recurrenceUnit',
+               'subtasks', 'sortOrder', 'calendarEventId',
+               'createdAt', 'updatedAt'
+             ]) &&
+             data.userId is string &&
+             data.userId == userId &&
+             isValidId(data.userId) &&
+             data.title is string &&
+             data.title.size() >= 1 &&
+             data.title.size() <= 120 &&
+             (!('description' in data) || data.description == null || (
+               data.description is string &&
+               data.description.size() <= 1000
+             )) &&
+             isValidOptionalDate(data, 'dueDate') &&
+             isValidOptionalTime(data, 'dueTime') &&
+             isValidOptionalDate(data, 'startDate') &&
+             isValidOptionalTime(data, 'startTime') &&
+             isValidOptionalDate(data, 'deadline') &&
+             data.priority is string &&
+             data.priority in ['Low', 'Medium', 'High'] &&
+             data.category is string &&
+             data.category in ['Personal', 'Work', 'Study', 'Other'] &&
+             (!('listId' in data) || data.listId == null || isValidId(data.listId)) &&
+             data.isCompleted is bool &&
+             (!('isStarred' in data) || data.isStarred is bool) &&
+             (!('recurrenceType' in data) || (
+               data.recurrenceType is string &&
+               data.recurrenceType in ['None', 'Daily', 'Weekly', 'Monthly', 'Yearly', 'Custom']
+             )) &&
+             (!('recurrenceInterval' in data) || (
+               data.recurrenceInterval is int &&
+               data.recurrenceInterval >= 1 &&
+               data.recurrenceInterval <= 365
+             )) &&
+             (!('recurrenceUnit' in data) || (
+               data.recurrenceUnit is string &&
+               data.recurrenceUnit in ['Days', 'Weeks', 'Months', 'Years']
+             )) &&
+             (!('subtasks' in data) || (
+               data.subtasks is list &&
+               data.subtasks.size() <= 50
+             )) &&
+             (!('sortOrder' in data) || (
+               data.sortOrder is int &&
+               data.sortOrder >= 0 &&
+               data.sortOrder <= 1000000
+             )) &&
+             (!('calendarEventId' in data) || data.calendarEventId == null || (
+               data.calendarEventId is string &&
+               data.calendarEventId.size() >= 1 &&
+               data.calendarEventId.size() <= 256
+             )) &&
+             isValidTimestamp(data.createdAt) &&
+             isValidTimestamp(data.updatedAt);
+    }
+
+    function isValidHistoryEntry(data, userId) {
+      return data.keys().hasAll(['userId', 'taskId', 'taskTitle', 'action', 'timestamp']) &&
+             data.keys().hasOnly(['userId', 'taskId', 'taskTitle', 'action', 'details', 'timestamp']) &&
+             data.userId is string &&
+             data.userId == userId &&
+             isValidId(data.userId) &&
+             data.taskId is string &&
+             data.taskId.size() >= 1 &&
+             data.taskId.size() <= 128 &&
+             data.taskTitle is string &&
+             data.taskTitle.size() >= 1 &&
+             data.taskTitle.size() <= 120 &&
+             data.action is string &&
+             data.action in [
+               'Created', 'Updated', 'Completed', 'Reopened', 'Deleted',
+               'Recurrence Advanced', 'Synced to Calendar',
+               'Imported from Gmail', 'Imported from Calendar', 'Shared to Chat'
+             ] &&
+             (!('details' in data) || data.details == null || (
+               data.details is string &&
+               data.details.size() <= 300
+             )) &&
+             isValidTimestamp(data.timestamp);
+    }
+
+    // --- USER PROFILE (PII ISOLATED TO OWNER) ---
+    match /users/{userId}/profile/{profileId} {
+      allow get: if isOwner(userId) && profileId == 'info';
+      allow list: if false;
+
+      allow create: if isOwner(userId) &&
+                       profileId == 'info' &&
+                       isValidUserProfile(incoming(), userId);
+
+      allow update: if isOwner(userId) &&
+                       profileId == 'info' &&
+                       isValidUserProfile(incoming(), userId) &&
+                       incoming().userId == existing().userId &&
+                       incoming().createdAt == existing().createdAt &&
+                       incoming().diff(existing()).affectedKeys().hasOnly(['name', 'email', 'updatedAt']);
+
+      allow delete: if isOwner(userId) && profileId == 'info';
+    }
+
+    // --- USER-SCOPED TASK LISTS SUBCOLLECTION ---
+    match /users/{userId}/lists/{listId} {
+      allow get: if isOwner(userId) && isValidId(listId);
+      allow list: if isOwner(userId);
+
+      allow create: if isOwner(userId) &&
+                       isValidId(listId) &&
+                       isValidTaskList(incoming(), userId);
+
+      allow update: if isOwner(userId) &&
+                       isValidId(listId) &&
+                       isValidTaskList(incoming(), userId) &&
+                       incoming().userId == existing().userId &&
+                       incoming().createdAt == existing().createdAt &&
+                       incoming().diff(existing()).affectedKeys().hasOnly(['name', 'colorHex', 'updatedAt']);
+
+      allow delete: if isOwner(userId) && isValidId(listId);
+    }
+
+    // --- USER-SCOPED TASKS SUBCOLLECTION ---
+    match /users/{userId}/tasks/{taskId} {
+      allow get: if isOwner(userId) && isValidId(taskId);
+      allow list: if isOwner(userId);
+
+      allow create: if isOwner(userId) &&
+                       isValidId(taskId) &&
+                       isValidTask(incoming(), userId);
+
+      allow update: if isOwner(userId) &&
+                       isValidId(taskId) &&
+                       isValidTask(incoming(), userId) &&
+                       incoming().userId == existing().userId &&
+                       incoming().createdAt == existing().createdAt &&
+                       incoming().diff(existing()).affectedKeys().hasOnly([
+                         'title', 'description', 'dueDate', 'dueTime',
+                         'startDate', 'startTime', 'deadline',
+                         'priority', 'category', 'listId',
+                         'isCompleted', 'isStarred',
+                         'recurrenceType', 'recurrenceInterval', 'recurrenceUnit',
+                         'subtasks', 'sortOrder', 'calendarEventId',
+                         'updatedAt'
+                       ]);
+
+      allow delete: if isOwner(userId) && isValidId(taskId);
+    }
+
+    // --- USER-SCOPED TASK HISTORY SUBCOLLECTION (APPEND-ONLY) ---
+    match /users/{userId}/history/{eventId} {
+      allow get: if isOwner(userId) && isValidId(eventId);
+      allow list: if isOwner(userId);
+
+      allow create: if isOwner(userId) &&
+                       isValidId(eventId) &&
+                       isValidHistoryEntry(incoming(), userId);
+
+      allow update: if false;
+
+      allow delete: if isOwner(userId) && isValidId(eventId);
+    }
+  }
+}

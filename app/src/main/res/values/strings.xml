@@ -1,0 +1,169 @@
+<resources>
+    <string name="app_name">SmartTodo</string>
+
+    <!-- Navigation -->
+    <string name="nav_home">Home</string>
+    <string name="nav_tasks">Tasks</string>
+    <string name="nav_completed">Completed</string>
+    <string name="nav_settings">Settings</string>
+
+    <!-- Auth -->
+    <string name="auth_tagline">Organize your day with clarity</string>
+    <string name="auth_subtitle">Sync your tasks securely across devices with real-time cloud backup and smart reminders.</string>
+    <string name="auth_google_button">Sign in with Google</string>
+    <string name="auth_signing_in">Signing in…</string>
+    <string name="auth_feature_sync">Real-time cloud sync</string>
+    <string name="auth_feature_reminders">Timely task reminders</string>
+    <string name="auth_feature_private">Private per-user storage</string>
+    <string name="auth_error_missing_client_id">Google Sign-In configuration is missing. Please check Firebase setup.</string>
+    <string name="auth_error_generic">Unable to sign in with Google. Please try again.</string>
+
+    <!-- Dashboard -->
+    <string name="greeting_morning">Good morning</string>
+    <string name="greeting_afternoon">Good afternoon</string>
+    <string name="greeting_evening">Good evening</string>
+    <string name="stat_total">Total</string>
+    <string name="stat_completed">Completed</string>
+    <string name="stat_pending">Pending</string>
+    <string name="stat_overdue">Overdue</string>
+    <string name="progress_title">Task Completion</string>
+    <string name="todays_tasks_header">Today\'s Tasks</string>
+    <string name="see_all">See all</string>
+    <string name="empty_today_title">All clear for today</string>
+    <string name="empty_today_subtitle">Tap the + button to schedule a task for today.</string>
+
+    <!-- Tasks & Filters -->
+    <string name="search_tasks_hint">Search tasks by title…</string>
+    <string name="empty_tasks_title">No tasks yet</string>
+    <string name="empty_tasks_subtitle">Create your first task to start organizing your day.</string>
+    <string name="empty_search_title">No matching tasks</string>
+    <string name="empty_search_subtitle">Try a different search term or adjust your filter.</string>
+    <string name="empty_completed_title">No completed tasks yet</string>
+    <string name="empty_completed_subtitle">Tasks you finish will appear here so you can track progress or reopen them.</string>
+
+    <!-- Add / Edit Task -->
+    <string name="add_task_title">New Task</string>
+    <string name="edit_task_title">Edit Task</string>
+    <string name="field_title_label">Task title *</string>
+    <string name="field_title_placeholder">What needs to be done?</string>
+    <string name="field_description_label">Description (optional)</string>
+    <string name="field_description_placeholder">Add notes, links, or details…</string>
+    <string name="field_due_date_label">Due date</string>
+    <string name="field_due_time_label">Due time (optional)</string>
+    <string name="field_no_time_set">No reminder time</string>
+    <string name="field_priority_label">Priority</string>
+    <string name="field_category_label">Category</string>
+    <string name="action_save">Save Task</string>
+    <string name="action_update">Update Task</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="action_delete">Delete</string>
+    <string name="action_reopen">Reopen</string>
+    <string name="action_clear_date">Clear date</string>
+    <string name="action_clear_time">Clear time</string>
+
+    <!-- Delete Confirmation -->
+    <string name="delete_dialog_title">Delete task?</string>
+    <string name="delete_dialog_message">Are you sure you want to permanently delete \"%1$s\"? Any scheduled reminder will be cancelled.</string>
+
+    <!-- Settings -->
+    <string name="settings_account_section">Account</string>
+    <string name="settings_appearance_section">Appearance</string>
+    <string name="settings_theme_light">Light</string>
+    <string name="settings_theme_dark">Dark</string>
+    <string name="settings_theme_system">System</string>
+    <string name="settings_notifications_section">Notifications</string>
+    <string name="settings_notifications_enable">Task reminders</string>
+    <string name="settings_notifications_enable_desc">Receive local alerts before tasks with due times</string>
+    <string name="settings_lead_time_label">Remind me before due time</string>
+    <string name="settings_permission_denied_title">Notification permission required</string>
+    <string name="settings_permission_denied_desc">Allow notifications so SmartTodo can alert you before scheduled tasks.</string>
+    <string name="settings_permission_grant">Allow</string>
+    <string name="settings_sign_out">Sign out</string>
+    <string name="sign_out_dialog_title">Sign out of SmartTodo?</string>
+    <string name="sign_out_dialog_message">Your tasks remain safely synced to your Google account and will restore when you sign back in.</string>
+
+    <!-- Status & Errors -->
+    <string name="offline_banner_message">Offline mode — changes will sync automatically when reconnected</string>
+    <string name="error_task_not_found">This task is no longer available.</string>
+    <string name="action_retry">Retry</string>
+    <string name="cd_add_task">Add new task</string>
+    <string name="cd_navigate_back">Navigate back</string>
+    <string name="cd_clear_search">Clear search</string>
+    <string name="cd_toggle_task">Toggle task completion</string>
+    <string name="cd_edit_task">Edit task</string>
+    <string name="cd_delete_task">Delete task</string>
+    <string name="cd_auth_illustration">SmartTodo productivity workspace illustration</string>
+    <string name="cd_empty_illustration">Empty task list illustration</string>
+
+    <!-- Notifications -->
+    <string name="notification_channel_name">Task Reminders</string>
+    <string name="notification_channel_desc">Alerts for upcoming SmartTodo tasks with scheduled due times</string>
+
+    <!-- Home Screen Widget -->
+    <string name="widget_description">View your pending SmartTodo tasks, track progress, complete tasks, and add new ones right from your home screen.</string>
+    <string name="widget_loading_subtitle">Syncing tasks…</string>
+    <string name="widget_signed_out_subtitle">Sign in to sync tasks</string>
+    <string name="widget_signed_out_title">Sign in to SmartTodo</string>
+    <string name="widget_signed_out_message">Tap to sign in with Google and view your tasks here.</string>
+    <string name="widget_empty_title">All caught up!</string>
+    <string name="widget_empty_subtitle">Tap + to add a new task.</string>
+    <string name="widget_cd_refresh">Refresh tasks</string>
+    <string name="widget_preview_subtitle">2 pending • 60% done</string>
+    <string name="widget_preview_task_1">Finalize project proposal</string>
+    <string name="widget_preview_meta_1">Today • 2:30 PM • Work</string>
+    <string name="widget_preview_task_2">Review study notes</string>
+    <string name="widget_preview_meta_2">Tomorrow • Study</string>
+    <string name="settings_widget_section">Home Screen Widget</string>
+    <string name="settings_widget_title">Add SmartTodo widget</string>
+    <string name="settings_widget_desc">Pin a live task list with quick-add and completion controls to your home screen</string>
+    <string name="settings_widget_pin_button">Add to Home Screen</string>
+
+    <!-- Lists, Subtasks, Scheduling & Recurrence -->
+    <string name="all_lists_label">All Lists</string>
+    <string name="manage_lists_label">Manage Lists</string>
+    <string name="create_list_title">New Task List</string>
+    <string name="rename_list_title">Rename Task List</string>
+    <string name="list_name_hint">e.g. Q4 Sprint, Groceries, Reading</string>
+    <string name="delete_list_dialog_title">Delete list?</string>
+    <string name="delete_list_dialog_message">Delete \"%1$s\"? Tasks in this list will remain in All Tasks without a list.</string>
+    <string name="quick_add_placeholder">Quick add a task…</string>
+    <string name="cd_quick_add">Create task quickly</string>
+    <string name="cd_star_task">Star important task</string>
+    <string name="cd_unstar_task">Remove star from task</string>
+    <string name="cd_drag_reorder">Drag to reorder task</string>
+    <string name="reorder_hint">Drag the handle on any task to reorder your custom priority list.</string>
+    <string name="field_list_label">Task List</string>
+    <string name="field_no_list">No list</string>
+    <string name="field_start_date_label">Start date</string>
+    <string name="field_start_time_label">Start time</string>
+    <string name="field_deadline_label">Deadline</string>
+    <string name="field_not_set">Not set</string>
+    <string name="field_recurrence_label">Recurrence</string>
+    <string name="field_subtasks_label">Subtasks</string>
+    <string name="add_subtask_hint">Add a subtask…</string>
+    <string name="cd_add_subtask">Add subtask</string>
+    <string name="cd_edit_subtask">Edit subtask</string>
+    <string name="cd_delete_subtask">Delete subtask</string>
+    <string name="star_important_label">Mark as important (Starred)</string>
+
+    <!-- Task History -->
+    <string name="task_history_title">Task History</string>
+    <string name="task_history_empty_title">No activity yet</string>
+    <string name="task_history_empty_subtitle">Task creations, edits, completions, recurrences, and Workspace syncs will appear here.</string>
+    <string name="action_clear_history">Clear History</string>
+    <string name="clear_history_dialog_title">Clear task history?</string>
+    <string name="clear_history_dialog_message">This permanently deletes your saved activity log entries.</string>
+
+    <!-- Google Workspace Integration -->
+    <string name="workspace_title">Google Workspace</string>
+    <string name="workspace_subtitle">Sync tasks with Google Calendar, import tasks from Gmail, and share updates in Google Chat.</string>
+    <string name="workspace_connect_button">Connect Google Workspace</string>
+    <string name="workspace_disconnect_button">Disconnect</string>
+    <string name="workspace_connected_badge">Google Workspace connected</string>
+    <string name="workspace_tab_calendar">Calendar</string>
+    <string name="workspace_tab_gmail">Gmail</string>
+    <string name="workspace_tab_chat">Chat</string>
+    <string name="workspace_sync_calendar">Sync to Calendar</string>
+    <string name="workspace_share_chat">Share to Chat</string>
+    <string name="workspace_import_task">Add as Task</string>
+</resources>

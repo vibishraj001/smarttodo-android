@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Precision geometric checkmark ribbon centered inside the 66dp Material You safe zone -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M31.5,53.5 L38.5,46.0 L47.5,58.5 L67.5,33.5 L77.5,33.5 L48.5,73.5 Z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:fillAlpha="0.6"
+        android:pathData="M67.5,45.5 L73.5,50.5 L51.5,73.5 L48.5,73.5 Z" />
+</vector>

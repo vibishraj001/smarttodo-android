@@ -1,0 +1,233 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "Authenticated user profile stored under the user's private profile subcollection.",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "Firebase Authentication UID of the owner."
+        },
+        "name": {
+          "type": "string",
+          "description": "Display name of the user (1 to 100 characters)."
+        },
+        "email": {
+          "type": "string",
+          "description": "Email address of the user (up to 254 characters)."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp set via FieldValue.serverTimestamp() on profile creation."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp set via FieldValue.serverTimestamp() on profile updates."
+        }
+      },
+      "required": ["userId", "name", "email", "createdAt", "updatedAt"]
+    },
+    "TaskList": {
+      "title": "TaskList",
+      "description": "A user-owned named task list for organizing tasks.",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "Firebase Authentication UID of the list owner."
+        },
+        "name": {
+          "type": "string",
+          "description": "Task list name (1 to 60 characters)."
+        },
+        "colorHex": {
+          "type": "string",
+          "description": "Accent color hex string (e.g. #2563EB)."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp set on list creation (immutable)."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp set on creation and update."
+        }
+      },
+      "required": ["userId", "name", "colorHex", "createdAt", "updatedAt"]
+    },
+    "Task": {
+      "title": "Task",
+      "description": "A user-owned to-do task supporting custom lists, subtasks, start date/time, due date/time, deadline, recurrence, starring, drag-and-drop sort order, and Google Calendar linkage.",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "Firebase Authentication UID of the task owner."
+        },
+        "title": {
+          "type": "string",
+          "description": "Task title (required, 1 to 120 characters)."
+        },
+        "description": {
+          "type": "string",
+          "description": "Optional task description (0 to 1000 characters). Omitted when null."
+        },
+        "dueDate": {
+          "type": "integer",
+          "description": "Optional due date as UTC start-of-day epoch milliseconds. Omitted when null."
+        },
+        "dueTime": {
+          "type": "string",
+          "description": "Optional due time in 24-hour HH:mm format. Omitted when null."
+        },
+        "startDate": {
+          "type": "integer",
+          "description": "Optional start date as UTC start-of-day epoch milliseconds. Omitted when null."
+        },
+        "startTime": {
+          "type": "string",
+          "description": "Optional start time in 24-hour HH:mm format. Omitted when null."
+        },
+        "deadline": {
+          "type": "integer",
+          "description": "Optional hard deadline date as UTC start-of-day epoch milliseconds. Omitted when null."
+        },
+        "priority": {
+          "type": "string",
+          "enum": ["Low", "Medium", "High"],
+          "description": "Task priority level."
+        },
+        "category": {
+          "type": "string",
+          "enum": ["Personal", "Work", "Study", "Other"],
+          "description": "Task category."
+        },
+        "listId": {
+          "type": "string",
+          "description": "Optional custom TaskList document ID. Omitted when unassigned."
+        },
+        "isCompleted": {
+          "type": "boolean",
+          "description": "Whether the task is currently marked completed."
+        },
+        "isStarred": {
+          "type": "boolean",
+          "description": "Whether the task is starred as important."
+        },
+        "recurrenceType": {
+          "type": "string",
+          "enum": ["None", "Daily", "Weekly", "Monthly", "Yearly", "Custom"],
+          "description": "Recurrence pattern for repeating tasks."
+        },
+        "recurrenceInterval": {
+          "type": "integer",
+          "description": "Interval for custom recurrence (1 to 365)."
+        },
+        "recurrenceUnit": {
+          "type": "string",
+          "enum": ["Days", "Weeks", "Months", "Years"],
+          "description": "Time unit for custom recurrence."
+        },
+        "subtasks": {
+          "type": "array",
+          "description": "Up to 50 subtasks ({id, title, isCompleted}) attached to this task."
+        },
+        "sortOrder": {
+          "type": "integer",
+          "description": "Manual drag-and-drop sort order index."
+        },
+        "calendarEventId": {
+          "type": "string",
+          "description": "Optional Google Calendar event ID when synced to Google Calendar."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp set via FieldValue.serverTimestamp() on creation (immutable)."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp set via FieldValue.serverTimestamp() on creation and every update."
+        }
+      },
+      "required": [
+        "userId",
+        "title",
+        "priority",
+        "category",
+        "isCompleted",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "TaskHistoryEntry": {
+      "title": "TaskHistoryEntry",
+      "description": "Append-only audit log entry recording task lifecycle and Google Workspace sync actions.",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "Firebase Authentication UID of the owner."
+        },
+        "taskId": {
+          "type": "string",
+          "description": "Related task document ID."
+        },
+        "taskTitle": {
+          "type": "string",
+          "description": "Snapshot of the task title when the event occurred (1 to 120 characters)."
+        },
+        "action": {
+          "type": "string",
+          "enum": [
+            "Created",
+            "Updated",
+            "Completed",
+            "Reopened",
+            "Deleted",
+            "Recurrence Advanced",
+            "Synced to Calendar",
+            "Imported from Gmail",
+            "Imported from Calendar",
+            "Shared to Chat"
+          ],
+          "description": "Type of task history event."
+        },
+        "details": {
+          "type": "string",
+          "description": "Optional human-readable summary details (up to 300 characters)."
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp when the event was recorded."
+        }
+      },
+      "required": ["userId", "taskId", "taskTitle", "action", "timestamp"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}/profile/{profileId}": {
+      "schema": { "$ref": "#/entities/UserProfile" },
+      "description": "Private user profile document stored at profileId = 'info'."
+    },
+    "/users/{userId}/lists/{listId}": {
+      "schema": { "$ref": "#/entities/TaskList" },
+      "description": "User-scoped custom task lists subcollection."
+    },
+    "/users/{userId}/tasks/{taskId}": {
+      "schema": { "$ref": "#/entities/Task" },
+      "description": "User-scoped to-do tasks subcollection."
+    },
+    "/users/{userId}/history/{eventId}": {
+      "schema": { "$ref": "#/entities/TaskHistoryEntry" },
+      "description": "User-scoped append-only task activity history log."
+    }
+  }
+}
